@@ -1,25 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1-deployment
+  name: my-deployment
   labels:
-    app: app1
-    type: app1
+    app: my-app
+    type: p3
+
 
 spec:
-  template:
-    metadata:
-      name: app1-pod
-      labels:
-        name: app1-pod
-        type: app1-pod
-    spec:
-      containers:
-      - name: app1-container
-        image: amiss/app1:v1
-        ports:
-        - containerPort: 3000
   replicas: 1
   selector:
     matchLabels:
-      type: app1-pod
+      app: my-app
+      type: my-pod
+
+  template:
+    metadata:
+      name: my-pod
+      labels:
+        app: my-app
+        type: my-pod
+    spec:
+      containers:
+      - name: pod-name
+        image: wil42/playground:v1
+        ports:
+        - containerPort: 8888
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app: my-app
+    type: p3
+
+
+spec:
+  type: NodePort
+  ports: 
+  - port: 3000
+    nodePort: 30000
+    targetPort: 8888
+  selector:
+    app: my-app
+    type: my-pod
