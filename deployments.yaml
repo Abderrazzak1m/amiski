@@ -8,7 +8,7 @@ metadata:
 
 
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: my-app
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: pod-name
-        image: wil42/playground:v3
+        image: wil42/playground:v2
         ports:
         - containerPort: 8888
 
